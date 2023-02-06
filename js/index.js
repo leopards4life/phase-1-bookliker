@@ -5,25 +5,32 @@ document.addEventListener("DOMContentLoaded", function() {
 function handleClick(event) {
     let showPanel = document.getElementById("show-panel");
     let bookInfo = document.createElement("div");
-    bookInfo.innerHTML = `<p>${event.target.title}</p>
+    bookInfo.id = "displayed-book";
+    bookInfo.innerHTML = `${event.target.title}
     <img src=${event.target.img}>
-    <span>${event.target.description}
-    ${event.target.users}</span>`
+    ${event.target.description}`;
+    let users = event.target.users;
+    users.forEach(user => {
+        console.log(user)
+        let currentBook = document.getElementById("displayed-book");
+        let userInfo = document.createElement("div");
+        userInfo.innerHTML = user.username;
+        // currentBook.appendChild(userInfo);
+    });
     showPanel.appendChild(bookInfo);
-    console.log(event)
 }
 
 function renderBooks(books) {
     let list = document.getElementById("list");
     books.forEach(book => {
         let singleBook = document.createElement("li");
-        singleBook.innerHTML = `<h6>${book.title}</h6>`;
-        singleBook.id = `${book.id}`;
-        singleBook.description= `${book.description}`;
-        singleBook.author=`${book.author}`;
-        singleBook.img=`${book.img_url}`;
-        singleBook.users=`${book.users}`;
-        singleBook.title=`${book.title}`;
+        singleBook.innerHTML = book.title;
+        singleBook.id = book.id;
+        singleBook.description = book.description;
+        singleBook.author = book.author;
+        singleBook.img = book.img_url;
+        singleBook.users = book.users;
+        singleBook.title = book.title;
         singleBook.addEventListener("click", handleClick);
         list.appendChild(singleBook);
     });
