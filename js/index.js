@@ -4,20 +4,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function handleClick(event) {
     let showPanel = document.getElementById("show-panel");
+    let users = event.target.users;
+    let userArray = [];
+    for (let i = 0; i < users.length; i++) {
+        userArray.push(users[i].username)
+    }
+    console.log(userArray)
     let bookInfo = document.createElement("div");
     bookInfo.id = "displayed-book";
+    let bookUsers = document.createElement("ul");
+    bookUsers.className = 'users-list';
     bookInfo.innerHTML = `${event.target.title}
     <img src=${event.target.img}>
     ${event.target.description}`;
-    let users = event.target.users;
-    users.forEach(user => {
-        console.log(user)
-        let currentBook = document.getElementById("displayed-book");
-        let userInfo = document.createElement("div");
-        userInfo.innerHTML = user.username;
-        // currentBook.appendChild(userInfo);
+    userArray.map(user => {
+        let singleUser = document.createElement("li");
+        singleUser.innerText = user;
+        bookUsers.appendChild(singleUser);
     });
     showPanel.appendChild(bookInfo);
+    showPanel.appendChild(bookUsers);
 }
 
 function renderBooks(books) {
